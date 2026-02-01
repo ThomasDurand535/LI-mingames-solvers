@@ -140,5 +140,5 @@ class ZipSolver(BasePage):
         body = self.driver.find_element(By.TAG_NAME, "body")
         for key in iteration:
             # Send each key with a short delay
-            self.driver.implicitly_wait(0.02)
+            self.driver.implicitly_wait(0.05)
             body.send_keys(key)
