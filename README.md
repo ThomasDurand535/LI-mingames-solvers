@@ -1,5 +1,4 @@
-# Zip solver
-# Sudoku solver
+# LinkedIn minigames solvers
 
 ## steps
 ### install the dependencies
