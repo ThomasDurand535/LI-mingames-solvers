@@ -1,14 +1,14 @@
-from selenium import webdriver
+from selenium.webdriver.firefox.webdriver import WebDriver
 
 
 class BasePage:
-    def __init__(self, url, cookies):
-        self.driver = webdriver.Firefox()
+    def __init__(self, driver: WebDriver, url: str, cookies):
+        self.driver = driver
+        cookieLen = len(self.driver.get_cookies())
         self.driver.get(url)
-        self.driver.implicitly_wait(2)
-        self.setCookies(cookies)
-        self.driver.refresh()
-        self.driver.implicitly_wait(2)
+        if cookieLen == 0:
+            self.setCookies(cookies)
+            self.driver.refresh()
 
     def setCookies(self, cookies):
         for c in cookies:

@@ -1,5 +1,5 @@
 # Zip solver
-I will certainly extend it for other games such as sudoku and queens
+# Sudoku solver
 
 ## steps
 ### install the dependencies
@@ -10,12 +10,12 @@ pip install -r requirements.txt
 the script needs your cookies for the app to authenticate you
 ### paste it in /common/cookies.json
 
+### you can comment the games you dont want to solve in main.py
+
 ### launch!
 ```sh
 python3 main.py
 ```
-
-amazing!
 
 zip solver algorithm from @winwinashwin - Ashwin
 

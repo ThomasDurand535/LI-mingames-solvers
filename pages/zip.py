@@ -1,7 +1,9 @@
 import math
+import time
 
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -15,9 +17,9 @@ dy = [1, 0, -1, 0]  # Change in y-coordinate for each direction
 
 
 class ZipSolver(BasePage):
-    def __init__(self):
+    def __init__(self, driver: WebDriver):
         # Initialize the BasePage with LinkedIn URL and cookies
-        super().__init__("https://www.linkedin.com", cookies)
+        super().__init__(driver, "https://www.linkedin.com", cookies)
 
         # Create the game grid by scraping the webpage
         self.grid = self.createGrid()
@@ -129,7 +131,7 @@ class ZipSolver(BasePage):
                     path_dirs = []
                     if self.dfs(i, j, path_dirs, 2):
                         return path_dirs
-        return []
+        return None
 
     def solvePuzzle(self, iteration: list[str]):
         """
@@ -138,5 +140,6 @@ class ZipSolver(BasePage):
             iteration: list of arrow keys representing the solution path
         """
         body = self.driver.find_element(By.TAG_NAME, "body")
+        time.sleep(2)
         for key in iteration:
             body.send_keys(key)
