@@ -7,7 +7,7 @@
 ```sh
 pip install -r requirements.txt
 ```
-### 2) Login to you Linkedin account and use a extension like "Export cookie JSON file" on your browser to copy your token and stuff
+### 2) Login to you Linkedin account and use an extension like "Export cookie JSON file" on your browser to copy your token and stuff
 
 the script needs your cookies for the app to authenticate you
 
