@@ -93,7 +93,7 @@ class SudokuSolver(BasePage):
         return self.sol
 
     def solvePuzzle(self, solution):
-        time.sleep(2)
+        time.sleep(1)
         body = self.driver.find_element(By.TAG_NAME, "body")
         for i in range(6):
             for j in range(6):

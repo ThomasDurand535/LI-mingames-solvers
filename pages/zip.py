@@ -140,6 +140,6 @@ class ZipSolver(BasePage):
             iteration: list of arrow keys representing the solution path
         """
         body = self.driver.find_element(By.TAG_NAME, "body")
-        time.sleep(2)
+        time.sleep(1)
         for key in iteration:
             body.send_keys(key)
