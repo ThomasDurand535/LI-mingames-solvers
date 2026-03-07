@@ -15,11 +15,19 @@ the script needs your cookies for the app to authenticate you
 
 ### 4) Launch!
 
-Of course feel free to comment the minigames you dont want to solve in main.py
+Of course feel free to comment the minigames you dont want to solve in main.py. So far the minigames that can be solved by this script are:
+- **Zip**
+- **Mini Sudoku**
+- **Queens**
 
 ```sh
 python3 main.py
 ```
+
+!!**Important**, You might want to change the WebDriver type. Currently I'm using the Firefox one because I'm logged in through Firefox but for this to work properly you need to use the WebDriver type corresponding to your browser.
+
+
+### Credits
 
 zip solver algorithm from @winwinashwin - Ashwin
 
