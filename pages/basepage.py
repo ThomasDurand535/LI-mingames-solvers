@@ -13,3 +13,6 @@ class BasePage:
     def setCookies(self, cookies):
         for c in cookies:
             self.driver.add_cookie(c)
+
+    def notSolved(self):
+        print("you must getSolution() of the puzzle first")

@@ -42,13 +42,11 @@ class SudokuSolver(BasePage):
         for i in range(6):
             if grid[i][y] != 0 and grid[i][y] in vals:
                 vals.remove(grid[i][y])
-
         for j in range(6):
             if grid[x][j] != 0 and grid[x][j] in vals:
                 vals.remove(grid[x][j])
         subGridX = math.floor(x / 2) * 2
         subGridY = math.floor(y / 3) * 3
-
         for i in range(2):
             for j in range(3):
                 current = grid[subGridX + i][subGridY + j]
@@ -65,34 +63,27 @@ class SudokuSolver(BasePage):
 
     def rcs(self, grid):
         next = self.nextZero(grid)
-
         if not next:
             self.sol = grid
             return True
-
         x, y = next["x"], next["y"]
         possibleValues = self.getPossibleValues(grid, x, y)
-
         if len(possibleValues) == 0:
             return False
-
         for val in possibleValues:
             gridCopy = copy.deepcopy(grid)
             gridCopy[x][y] = val
             if self.rcs(gridCopy):
                 return True
-
         return False
 
-    def solve(self):
-        next = self.nextZero(self.grid)
-        if not next:
-            return
+    def getSolution(self):
         self.rcs(self.grid)
 
-        return self.sol
-
-    def solvePuzzle(self, solution):
+    def solvePuzzle(self):
+        if not self.sol:
+            self.notSolved()
+            return
         time.sleep(1)
         body = self.driver.find_element(By.TAG_NAME, "body")
         for i in range(6):
@@ -102,6 +93,6 @@ class SudokuSolver(BasePage):
                 ).find_element(By.CLASS_NAME, "sudoku-cell-content")
                 try:
                     cell.click()
-                    body.send_keys(solution[i][j])
-                except ():
+                    body.send_keys(self.sol[i][j])
+                except:
                     pass
