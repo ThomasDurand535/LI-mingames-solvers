@@ -1,4 +1,5 @@
 import math
+import time
 from collections import Counter
 
 from selenium.webdriver.common.by import By
@@ -9,12 +10,18 @@ from selenium.webdriver.support.wait import WebDriverWait
 from common.cookies import cookies
 from pages.basepage import BasePage
 
+directions = [(-1, -1), (-1, 1), (1, -1), (1, 1)]
+
 
 class QueensSolver(BasePage):
     def __init__(self, driver: WebDriver):
         super().__init__(driver, "https://www.linkedin.com", cookies)
         self.grid = self.createGrid()
+
         self.sortedAreas = []
+        self.usedCols = []
+        self.usedRows = []
+
         self.solution = []
 
     def createGrid(self):
@@ -41,18 +48,22 @@ class QueensSolver(BasePage):
 
         return grid
 
+    def isThereAnAdjacentCrown(self, gridRes, x, y):
+        for di, dj in directions:
+            dx, dy = x + di, y + dj
+            if len(gridRes) > dx >= 0 and len(gridRes) > dy >= 0:
+                if gridRes[dx][dy]:
+                    return True
+        return False
+
     def isSolutionValid(self, gridRes):
         colWithCrown = []
         rowWithCrown = []
-        directions = [(-1, -1), (-1, 1), (1, -1), (1, 1)]
         for i in range(len(gridRes)):
             for j in range(len(gridRes)):
                 if gridRes[i][j]:
-                    for di, dj in directions:
-                        x, y = i + di, j + dj
-                        if len(gridRes) > x >= 0 and len(gridRes) > y >= 0:
-                            if gridRes[x][y]:
-                                return False
+                    if self.isThereAnAdjacentCrown(gridRes, i, j):
+                        return False
                     colWithCrown.append(i)
                     rowWithCrown.append(j)
         colCounter = Counter(colWithCrown)
@@ -72,11 +83,20 @@ class QueensSolver(BasePage):
         for i in range(len(gridRes)):
             for j in range(len(gridRes)):
                 if self.grid[i][j] == self.sortedAreas[colorIndex]:
+                    if self.isThereAnAdjacentCrown(gridRes, i, j):
+                        continue
+                    if j in self.usedCols or i in self.usedRows:
+                        continue
+
                     gridRes[i][j] = True
+                    self.usedCols.append(j)
+                    self.usedRows.append(i)
                     if self.browseGrid(gridRes, colorIndex + 1):
                         return True
+
+                    self.usedRows.pop()
+                    self.usedCols.pop()
                     gridRes[i][j] = False
-                    continue
         return False
 
     def getAreasCounterSorted(self):
@@ -95,9 +115,10 @@ class QueensSolver(BasePage):
 
         self.sortedAreas = self.getAreasCounterSorted()
         self.browseGrid(gridRes, 0)
-        return self.solution
+        print(self.solution)
 
     def solvePuzzle(self):
+        time.sleep(1)
         if len(self.solution) == 0:
             self.notSolved()
             return
