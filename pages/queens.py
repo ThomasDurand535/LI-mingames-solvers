@@ -42,21 +42,23 @@ class QueensSolver(BasePage):
         return grid
 
     def isSolutionValid(self, gridRes):
-        colorsWithCrown = []
         colWithCrown = []
         rowWithCrown = []
+        directions = [(-1, -1), (-1, 1), (1, -1), (1, 1)]
         for i in range(len(gridRes)):
             for j in range(len(gridRes)):
                 if gridRes[i][j]:
-                    colorsWithCrown.append(self.grid[i][j])
+                    for di, dj in directions:
+                        x, y = i + di, j + dj
+                        if len(gridRes) > x >= 0 and len(gridRes) > y >= 0:
+                            if gridRes[x][y]:
+                                return False
                     colWithCrown.append(i)
                     rowWithCrown.append(j)
-        colorCounter = Counter(colorsWithCrown)
         colCounter = Counter(colWithCrown)
         rowCounter = Counter(rowWithCrown)
         return not (
-            any(count > 1 for count in colorCounter.values())
-            or any(countCol > 1 for countCol in colCounter.values())
+            any(countCol > 1 for countCol in colCounter.values())
             or any(countRow > 1 for countRow in rowCounter.values())
         )
 
