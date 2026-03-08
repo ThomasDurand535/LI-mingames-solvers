@@ -115,7 +115,6 @@ class QueensSolver(BasePage):
 
         self.sortedAreas = self.getAreasCounterSorted()
         self.browseGrid(gridRes, 0)
-        print(self.solution)
 
     def solvePuzzle(self):
         time.sleep(1)
