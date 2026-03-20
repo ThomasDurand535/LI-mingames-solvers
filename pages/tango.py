@@ -1,8 +1,5 @@
 import copy
 import time
-from collections import Counter
-from pydoc import html
-from xxlimited import new
 
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
