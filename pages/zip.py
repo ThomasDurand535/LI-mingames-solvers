@@ -69,7 +69,7 @@ class ZipSolver(BasePage):
                 next_number = original_next
         return False
 
-    def getZipSolution(self):
+    def getSolution(self):
         for i in range(self.n):
             for j in range(self.n):
                 if self.grid[i][j] == 1:
@@ -85,6 +85,6 @@ class ZipSolver(BasePage):
             self.notSolved()
             return
         body = self.driver.find_element(By.TAG_NAME, "body")
-        time.sleep(1)
+        time.sleep(2)
         for key in self.solution:
             body.send_keys(key)
