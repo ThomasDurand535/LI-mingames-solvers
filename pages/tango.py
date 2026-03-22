@@ -153,6 +153,7 @@ class TangoSolver(BasePage):
                 if value != TangoCellValEnum.EMPTY
                 else TangoCellValEnum.EMPTY
             )
+            self.setSigns(grid, x, y + 1, edge)
 
         if bottom != TangoCellSignEnum.NONE:
             grid[x + 1][y]["value"] = (
@@ -160,6 +161,7 @@ class TangoSolver(BasePage):
                 if value != TangoCellValEnum.EMPTY
                 else TangoCellValEnum.EMPTY
             )
+            self.setSigns(grid, x + 1, y, edge)
 
     def fillGrid(self, newGrid: list[list[TangoCell]], edge) -> bool:
 
@@ -216,7 +218,7 @@ class TangoSolver(BasePage):
         return True
 
     def getSolution(self):
-        grid = self.grid.copy()
+        grid = copy.deepcopy(self.grid)
         edge = len(grid)
         self.fillGrid(grid, edge)
 
@@ -228,16 +230,17 @@ class TangoSolver(BasePage):
         if len(self.solution) == 0:
             self.notSolved()
             return
-        body = self.driver.find_element(By.TAG_NAME, "body")
         edge = len(self.solution)
-        time.sleep(1)
-        body.click()
+        time.sleep(2)
+        htmlGrid = self.driver.find_element(
+            By.CSS_SELECTOR, "div[data-testid='interactive-grid']"
+        )
         for i in range(edge):
             for j in range(edge):
                 if self.grid[i][j]["value"] != TangoCellValEnum.EMPTY:
                     continue
                 cellIndex = i * edge + j
-                element = self.driver.find_element(
+                element = htmlGrid.find_element(
                     By.CSS_SELECTOR, f"div[data-cell-idx='{cellIndex}']"
                 )
                 if self.solution[i][j]["value"] == TangoCellValEnum.SUN:
